@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/Ship_03.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ASSETS/grid.png" type="Texture" id=2]
+
+[node name="World" type="Node2D"]
+
+[node name="Ship" parent="." instance=ExtResource( 1 )]
+position = Vector2( 512, 300 )
+
+[node name="Camera2D" type="Camera2D" parent="Ship"]
+current = true
+
+[node name="screensize" type="Node2D" parent="."]
+position = Vector2( 1024, 600 )
+
+[node name="bg" type="ParallaxBackground" parent="."]
+
+[node name="l" type="ParallaxLayer" parent="bg"]
+motion_scale = Vector2( 0.1, 0.1 )
+motion_mirroring = Vector2( 1536, 1536 )
+
+[node name="s" type="Sprite" parent="bg/l"]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 2 )
+centered = false
