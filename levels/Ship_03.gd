@@ -4,10 +4,10 @@ extends RigidBody2D
 var screensize
 
 #thrust Vectors
-export (Vector2) var thrust_force = Vector2(15,0)
-var thrust_rev = Vector2(-7.5,0)
-var thrust_up = Vector2(0,7.5)
-var thrust_down = Vector2(0,-7.5)
+export (Vector2) var thrust_force = Vector2(150,0)
+var thrust_rev = Vector2(-75,0)
+var thrust_up = Vector2(0,75)
+var thrust_down = Vector2(0,-75)
 
 #controls
 var forward = 0
@@ -21,6 +21,11 @@ func _ready():
 
 func _draw():
 	draw_circle((to_local($Thrusters/Rear.global_position) + thrust_force),5,Color.rebeccapurple)
+	#Draw vector for rear thruster #Issue
+	draw_line(to_local($Thrusters/Rear.global_position),(
+		to_local($Thrusters/Rear.global_position) + 
+		thrust_force.rotated(global_rotation)
+		),Color.red)
 	draw_circle((to_local($Thrusters/Left/Forward.global_position) + thrust_rev),5,Color.rebeccapurple)
 	draw_circle((to_local($Thrusters/Right/Forward.global_position) + thrust_rev),5,Color.rebeccapurple)
 	#draw_circle((Vector2(0,0) + thrust_force),5,Color.rebeccapurple)
@@ -32,16 +37,30 @@ func _process(_delta):
 		forward = 0
 	if Input.is_action_pressed("reverse_thrust"):
 		reverse = 1
+		$Thrusters/Left/Forward/highlight.visible = true
+		$Thrusters/Right/Forward/highlight.visible = true
 	else:
 		reverse = 0
+		$Thrusters/Left/Forward/highlight.visible = false
+		$Thrusters/Right/Forward/highlight.visible = false
 	if Input.is_action_pressed("roll_left"):
 		roll_left = 1
+		$Thrusters/Left/Rear/highlight.visible = true
+		$Thrusters/Right/Front/highlight.visible = true
 	else:
 		roll_left = 0
+		$Thrusters/Left/Rear/highlight.visible = false
+		$Thrusters/Right/Front/highlight.visible = false
 	if Input.is_action_pressed("roll_right"):
 		roll_right = 1
+		$Thrusters/Left/Front/highlight.visible = true
+		$Thrusters/Right/Rear/highlight.visible = true
 	else:
 		roll_right = 0
+		$Thrusters/Left/Front/highlight.visible = false
+		$Thrusters/Right/Rear/highlight.visible = false
+		
+	$Thrusters/Rear/highlight.visible = bool(forward)
 
 func _integrate_forces(_state):
 	#if !centered:
@@ -51,7 +70,11 @@ func _integrate_forces(_state):
 	#	state.set_transform(xform)
 	#	centered = true
 	#add_force($Thrusters/Rear.global_position, thrust_force * forward)
-	apply_impulse(to_local($Thrusters/Rear.global_position), thrust_force * forward)
+	#apply impulse vector for rear thruster #Issue
+	apply_impulse(
+		to_local($Thrusters/Rear.global_position),
+		thrust_force.rotated(global_rotation) * forward
+		)
 	apply_impulse(to_local($Thrusters/Left/Forward.global_position), thrust_rev * reverse)
 	apply_impulse(to_local($Thrusters/Right/Forward.global_position), thrust_rev * reverse)
 	
