@@ -15,7 +15,8 @@ onready var rope_end_joint =$RopeEndPiece/C/J
 func _process(_delta):
 	get_rope_points()
 	if !rope_points.empty():
-		update
+		#update
+		pass
 
 
 func spawn_rope(start_pos:Vector2, end_pos:Vector2):

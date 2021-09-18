@@ -6,6 +6,8 @@ var screensize
 #thrust Vectors
 export (Vector2) var thrust_force = Vector2(15,0)
 var thrust_rev = Vector2(-7.5,0)
+var thrust_up = Vector2(0,7.5)
+var thrust_down = Vector2(0,-7.5)
 
 #controls
 var forward = 0
@@ -37,7 +39,7 @@ func _process(_delta):
 	else:
 		roll_left = 0
 	if Input.is_action_pressed("roll_right"):
-		roll_right = 0
+		roll_right = 1
 	else:
 		roll_right = 0
 
@@ -52,7 +54,13 @@ func _integrate_forces(_state):
 	apply_impulse(to_local($Thrusters/Rear.global_position), thrust_force * forward)
 	apply_impulse(to_local($Thrusters/Left/Forward.global_position), thrust_rev * reverse)
 	apply_impulse(to_local($Thrusters/Right/Forward.global_position), thrust_rev * reverse)
-	#add_force(Vector2(0,0), thrust_force)
+	
+	apply_impulse(to_local($Thrusters/Left/Rear.global_position), thrust_up * roll_left)
+	apply_impulse(to_local($Thrusters/Right/Front.global_position), thrust_down * roll_left)
+	
+	apply_impulse(to_local($Thrusters/Left/Front.global_position), thrust_up * roll_right)
+	apply_impulse(to_local($Thrusters/Right/Rear.global_position), thrust_down * roll_right)
+	
 
 func debug():
 	print("local:" + String(to_local($Thrusters/Rear.global_position)))
