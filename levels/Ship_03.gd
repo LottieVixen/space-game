@@ -102,20 +102,22 @@ func _integrate_forces(_state):
 	if break_this_time:
 		break_this_time = false
 		#print("\nto:    " + String(angle_to_root/PI) + "\nfrom: " + String(angle_from_root/PI) + "\nunit:  " + String(unit_angle/PI))
+		print("pos: "+ String($Thrusters/Left/Front.position))
+		print("loc: "+ String(self.to_local($Thrusters/Left/Front.global_position)))
 		pass
 	#Reverse
-	apply_impulse(to_local($Thrusters/Left/Forward.global_position), thrust_rev * reverse)
-	apply_impulse(to_local($Thrusters/Right/Forward.global_position), thrust_rev * reverse)
+	apply_impulse($Thrusters/Left/Forward.position.normalized(), thrust_rev.rotated(global_rotation) * reverse)
+	apply_impulse($Thrusters/Right/Forward.position.normalized(), thrust_rev.rotated(global_rotation)  * reverse)
 	#Roll Left
-	apply_impulse(to_local($Thrusters/Left/Rear.global_position), thrust_up * roll_left)
-	apply_impulse(to_local($Thrusters/Right/Front.global_position), thrust_down * roll_left)
+	apply_impulse($Thrusters/Left/Rear.position, thrust_up * roll_left)
+	apply_impulse($Thrusters/Right/Front.position, thrust_down * roll_left)
 	#Roll Right
-	apply_impulse(to_local($Thrusters/Left/Front.global_position), thrust_up * roll_right)
-	apply_impulse(to_local($Thrusters/Right/Rear.global_position), thrust_down * roll_right)
+	apply_impulse($Thrusters/Left/Front.position, thrust_up * roll_right)
+	apply_impulse($Thrusters/Right/Rear.position, thrust_down * roll_right)
 	#Strafe left
-	apply_impulse(to_local($Thrusters/Right/Mid.global_position), thrust_down * strafe_left)
+	apply_impulse($Thrusters/Right/Mid.position.normalized(), thrust_down.rotated(global_rotation) * strafe_left)
 	#Strafe right
-	apply_impulse(to_local($Thrusters/Left/Mid.global_position), thrust_up * strafe_right)
+	apply_impulse($Thrusters/Left/Mid.position.normalized(), thrust_up.rotated(global_rotation) * strafe_right)
 
 func debug():
 	print("local:" + String(to_local($Thrusters/Rear.global_position)))
