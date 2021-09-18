@@ -12,11 +12,15 @@ onready var thrust_rev = half * Vector2.LEFT
 onready var thrust_up = half * Vector2.DOWN
 onready var thrust_down = half * Vector2.UP
 
+var break_this_time = false
+
 #controls
 var forward = 0
 var reverse = 0
 var roll_left = 0
 var roll_right = 0
+var strafe_left = 0
+var strafe_right = 0
 
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
@@ -62,8 +66,22 @@ func _process(_delta):
 		roll_right = 0
 		$Thrusters/Left/Front/highlight.visible = false
 		$Thrusters/Right/Rear/highlight.visible = false
-		
+	if Input.is_action_pressed("left"):
+		strafe_left = 1
+		$Thrusters/Right/Mid/highlight.visible = true
+	else:
+		strafe_left = 0
+		$Thrusters/Right/Mid/highlight.visible = false
+	if Input.is_action_pressed("right"):
+		strafe_right = 1
+		$Thrusters/Left/Mid/highlight.visible = true
+	else:
+		strafe_right = 0
+		$Thrusters/Left/Mid/highlight.visible = false
 	$Thrusters/Rear/highlight.visible = bool(forward)
+	
+	if Input.is_action_pressed("breakpoint_trigger"):
+		break_this_time = true
 
 func _integrate_forces(_state):
 	#if !centered:
@@ -74,19 +92,30 @@ func _integrate_forces(_state):
 	#	centered = true
 	#add_force($Thrusters/Rear.global_position, thrust_force * forward)
 	#apply impulse vector for rear thruster #Issue
-	apply_impulse(
-		to_local($Thrusters/Rear.global_position),
-		thrust_force.rotated(global_rotation) * forward
-		)
+	#breakdown
+	#apply_impulse(to_local($Thrusters/Rear.global_position), thrust_force.rotated(global_rotation) * forward)
+	var global_loc = $Thrusters/Rear.global_position
+	var local_loc = to_local(global_loc)
+	var origin_thrust = thrust_force
+	var rot_thrust = origin_thrust.rotated(global_rotation)
+	var calc_thrust = rot_thrust * forward 
+	#apply_impulse(local_loc, calc_thrust)
+	apply_central_impulse(calc_thrust)
+	if break_this_time:
+		pass
+	#Reverse
 	apply_impulse(to_local($Thrusters/Left/Forward.global_position), thrust_rev * reverse)
 	apply_impulse(to_local($Thrusters/Right/Forward.global_position), thrust_rev * reverse)
-	
+	#Roll Left
 	apply_impulse(to_local($Thrusters/Left/Rear.global_position), thrust_up * roll_left)
 	apply_impulse(to_local($Thrusters/Right/Front.global_position), thrust_down * roll_left)
-	
+	#Roll Right
 	apply_impulse(to_local($Thrusters/Left/Front.global_position), thrust_up * roll_right)
 	apply_impulse(to_local($Thrusters/Right/Rear.global_position), thrust_down * roll_right)
-	
+	#Strafe left
+	apply_impulse(to_local($Thrusters/Right/Mid.global_position), thrust_down * strafe_left)
+	#Strafe right
+	apply_impulse(to_local($Thrusters/Left/Mid.global_position), thrust_up * strafe_right)
 
 func debug():
 	print("local:" + String(to_local($Thrusters/Rear.global_position)))
