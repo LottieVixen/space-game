@@ -4,10 +4,13 @@ extends RigidBody2D
 var screensize
 
 #thrust Vectors
-export (Vector2) var thrust_force = Vector2(150,0)
-var thrust_rev = Vector2(-75,0)
-var thrust_up = Vector2(0,75)
-var thrust_down = Vector2(0,-75)
+export (float) var thruster_forces = 150
+onready var half = thruster_forces / 2
+
+onready var thrust_force = thruster_forces * Vector2.RIGHT
+onready var thrust_rev = half * Vector2.LEFT
+onready var thrust_up = half * Vector2.DOWN
+onready var thrust_down = half * Vector2.UP
 
 #controls
 var forward = 0
@@ -17,7 +20,7 @@ var roll_right = 0
 
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
-	debug()
+	#debug()
 
 func _draw():
 	draw_circle((to_local($Thrusters/Rear.global_position) + thrust_force),5,Color.rebeccapurple)
