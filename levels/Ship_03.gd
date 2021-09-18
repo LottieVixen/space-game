@@ -97,22 +97,11 @@ func _integrate_forces(_state):
 	#add_force($Thrusters/Rear.global_position, thrust_force * forward)
 	#apply impulse vector for rear thruster #Issue
 	#breakdown
-	#apply_impulse(to_local($Thrusters/Rear.global_position), thrust_force.rotated(global_rotation) * forward)
-	var global_loc = $Thrusters/Rear.global_position
-	var local_loc = to_local(global_loc)
-	#local_loc = rear_thruster_offset
-	local_loc = Vector2(-96,0)
-	var origin_thrust = thrust_force
-	var rot_thrust = origin_thrust.rotated(global_rotation)
-	var calc_thrust = rot_thrust * forward 
-	var angle_from_root = local_loc.angle_to(position)
-	var angle_to_root = position.angle_to(local_loc)
-	var unit_angle = Vector2.LEFT.angle()
-	apply_impulse(local_loc.normalized(), calc_thrust)
+	apply_impulse(to_local($Thrusters/Rear.global_position).normalized(), thrust_force.rotated(global_rotation) * forward)
 	#apply_central_impulse(calc_thrust)
 	if break_this_time:
 		break_this_time = false
-		print("\nto:    " + String(angle_to_root/PI) + "\nfrom: " + String(angle_from_root/PI) + "\nunit:  " + String(unit_angle/PI))
+		#print("\nto:    " + String(angle_to_root/PI) + "\nfrom: " + String(angle_from_root/PI) + "\nunit:  " + String(unit_angle/PI))
 		pass
 	#Reverse
 	apply_impulse(to_local($Thrusters/Left/Forward.global_position), thrust_rev * reverse)
