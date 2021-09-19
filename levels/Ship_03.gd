@@ -24,12 +24,19 @@ var strafe_left = 0
 var strafe_right = 0
 
 func _draw():
+	#rear thruster
 	draw_circle((thrust_force.rotated(rotation)),5,Color.rebeccapurple)
 	draw_line($Thrusters/Rear.position,($Thrusters/Rear.position + thrust_force.rotated(rotation)*50),Color.red)
+	#reverse thrusters
 	draw_circle(($Thrusters/Left/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
-	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)) )
+	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)))
 	draw_circle(($Thrusters/Right/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
+	#angular velocity arc
 	draw_arc(Vector2.ZERO, 10, 0, angular_velocity, 32, Color.red, 10, false)
+	
+	#ship forward direction and heading
+	draw_line(Vector2.ZERO, (Vector2.ZERO + Vector2.RIGHT.rotated(rotation) * 50), Color.red)
+	draw_line(Vector2.ZERO, linear_velocity.rotated(rotation * -1), Color.blue)
 
 func _process(_delta):
 	if Input.is_action_pressed("jump"):
