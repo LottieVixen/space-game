@@ -23,7 +23,6 @@ position = Vector2( 1024, 600 )
 [node name="bg" type="ParallaxBackground" parent="."]
 
 [node name="l" type="ParallaxLayer" parent="bg"]
-motion_scale = Vector2( 0.1, 0.1 )
 motion_mirroring = Vector2( 1536, 1536 )
 
 [node name="s" type="Sprite" parent="bg/l"]
