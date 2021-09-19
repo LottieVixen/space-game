@@ -25,11 +25,10 @@ var strafe_right = 0
 
 func _draw():
 	draw_circle((thrust_force.rotated(rotation)),5,Color.rebeccapurple)
-	draw_line($Thrusters/Rear.position,($Thrusters/Rear.position + thrust_force.rotated(rotation)),Color.red)
-	draw_circle(($Thrusters/Left/Forward.position + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
+	draw_line($Thrusters/Rear.position,($Thrusters/Rear.position + thrust_force.rotated(rotation)*50),Color.red)
+	draw_circle(($Thrusters/Left/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
 	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)) )
-	draw_circle(($Thrusters/Right/Forward.position + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
-	#draw_circle((Vector2(0,0) + thrust_force),5,Color.rebeccapurple)
+	draw_circle(($Thrusters/Right/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
 
 func _process(_delta):
 	if Input.is_action_pressed("jump"):
