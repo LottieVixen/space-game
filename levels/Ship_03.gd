@@ -1,6 +1,5 @@
 extends RigidBody2D
 
-
 var screensize
 
 #thrust Vectors
@@ -31,13 +30,11 @@ func _ready():
 	#debug()
 
 func _draw():
-	draw_circle((Vector2.LEFT + thrust_force),5,Color.rebeccapurple)
-	draw_line(Vector2.LEFT,(
-		to_local($Thrusters/Rear.global_position) + 
-		thrust_force.rotated(rotation)
-		),Color.red)
-	draw_circle((to_local($Thrusters/Left/Forward.global_position) + thrust_rev),5,Color.rebeccapurple)
-	draw_circle((to_local($Thrusters/Right/Forward.global_position) + thrust_rev),5,Color.rebeccapurple)
+	draw_circle((thrust_force.rotated(rotation)),5,Color.rebeccapurple)
+	draw_line($Thrusters/Rear.position,(to_local($Thrusters/Rear.global_position) + thrust_force.rotated(rotation)),Color.red)
+	draw_circle((to_local($Thrusters/Left/Forward.global_position) + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
+	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)) )
+	draw_circle((to_local($Thrusters/Right/Forward.global_position) + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
 	#draw_circle((Vector2(0,0) + thrust_force),5,Color.rebeccapurple)
 
 func _process(_delta):
@@ -85,6 +82,8 @@ func _process(_delta):
 	
 	if Input.is_action_pressed("breakpoint_trigger"):
 		break_this_time = true
+		
+	update()
 
 func _integrate_forces(_state):
 	#if !centered:
