@@ -40,7 +40,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-TargetPath = NodePath("../Ship/Camera2D")
+TargetPath = NodePath("../Ship")
 
 [node name="container" type="PanelContainer" parent="debug"]
 margin_right = 140.0
