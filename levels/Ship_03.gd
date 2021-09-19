@@ -29,6 +29,7 @@ func _draw():
 	draw_circle(($Thrusters/Left/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
 	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)) )
 	draw_circle(($Thrusters/Right/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
+	draw_arc(Vector2.ZERO, 10, 0, angular_velocity, 32, Color.red, 10, false)
 
 func _process(_delta):
 	if Input.is_action_pressed("jump"):
