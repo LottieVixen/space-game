@@ -3,5 +3,6 @@
 [ext_resource path="res://ASSETS/fonts/RobotoMono-Medium.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 20
+size = 10
+use_filter = true
 font_data = ExtResource( 1 )
