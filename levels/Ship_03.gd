@@ -95,8 +95,8 @@ func _integrate_forces(_state):
 	#	centered = true
 	#add_force($Thrusters/Rear.global_position, thrust_force * forward)
 	#apply_impulse(to_local($Thrusters/Rear.global_position).normalized(), thrust_force.rotated(global_rotation) * forward)
-	#apply_impulse(Vector2.LEFT, thrust_force.rotated(global_rotation) * forward) #has a slight clockwise spin
-	apply_central_impulse(thrust_force.rotated(rotation) * forward) #works as expected, flies straight at the ship's heading
+	apply_impulse(Vector2.LEFT, thrust_force.rotated(rotation) * forward) #has a slight clockwise spin
+	#apply_central_impulse(thrust_force.rotated(rotation) * forward) #works as expected, flies straight at the ship's heading
 	if break_this_time:
 		break_this_time = false
 		#print("\nto:    " + String(angle_to_root/PI) + "\nfrom: " + String(angle_from_root/PI) + "\nunit:  " + String(unit_angle/PI))
