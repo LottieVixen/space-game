@@ -32,7 +32,6 @@ func _ready():
 
 func _draw():
 	draw_circle((Vector2.LEFT + thrust_force),5,Color.rebeccapurple)
-	#Draw vector for rear thruster #Issue
 	draw_line(Vector2.LEFT,(
 		to_local($Thrusters/Rear.global_position) + 
 		thrust_force.rotated(rotation)
@@ -95,8 +94,6 @@ func _integrate_forces(_state):
 	#	state.set_transform(xform)
 	#	centered = true
 	#add_force($Thrusters/Rear.global_position, thrust_force * forward)
-	#apply impulse vector for rear thruster #Issue
-	#breakdown
 	#apply_impulse(to_local($Thrusters/Rear.global_position).normalized(), thrust_force.rotated(global_rotation) * forward)
 	#apply_impulse(Vector2.LEFT, thrust_force.rotated(global_rotation) * forward) #has a slight clockwise spin
 	apply_central_impulse(thrust_force.rotated(rotation) * forward) #works as expected, flies straight at the ship's heading
