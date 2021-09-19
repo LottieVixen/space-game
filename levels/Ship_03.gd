@@ -27,6 +27,7 @@ func _draw():
 	#rear thruster
 	draw_circle((thrust_force.rotated(rotation)),5,Color.rebeccapurple)
 	draw_line($Thrusters/Rear.position,($Thrusters/Rear.position + thrust_force.rotated(rotation)*50),Color.red)
+	#draw_line($Thrusters/Rear.position,(thrust_force.rotated($Thrusters/Rear.position.angle_to(position))*50),Color.red)
 	#reverse thrusters
 	draw_circle(($Thrusters/Left/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
 	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)))
@@ -87,6 +88,7 @@ func _process(_delta):
 	update()
 
 func _integrate_forces(_state):
+	#apply_impulse($Thrusters/Rear.position, thrust_force.rotated($Thrusters/Rear.position.angle_to(position)) * forward)
 	apply_impulse($Thrusters/Rear.position, thrust_force.rotated(rotation) * forward) #has a slight clockwise spin
 	#apply_central_impulse(thrust_force.rotated(rotation) * forward) #works as expected, flies straight at the ship's heading
 	if break_this_time:
