@@ -1,7 +1,5 @@
 extends RigidBody2D
 
-var screensize
-
 #thrust Vectors
 export (float) var thruster_forces = 150
 onready var half = thruster_forces / 2
@@ -25,16 +23,12 @@ var roll_right = 0
 var strafe_left = 0
 var strafe_right = 0
 
-func _ready():
-	screensize = get_viewport().get_visible_rect().size
-	#debug()
-
 func _draw():
 	draw_circle((thrust_force.rotated(rotation)),5,Color.rebeccapurple)
-	draw_line($Thrusters/Rear.position,(to_local($Thrusters/Rear.global_position) + thrust_force.rotated(rotation)),Color.red)
-	draw_circle((to_local($Thrusters/Left/Forward.global_position) + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
+	draw_line($Thrusters/Rear.position,($Thrusters/Rear.position + thrust_force.rotated(rotation)),Color.red)
+	draw_circle(($Thrusters/Left/Forward.position + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
 	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)) )
-	draw_circle((to_local($Thrusters/Right/Forward.global_position) + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
+	draw_circle(($Thrusters/Right/Forward.position + thrust_rev.rotated(rotation)),5,Color.rebeccapurple)
 	#draw_circle((Vector2(0,0) + thrust_force),5,Color.rebeccapurple)
 
 func _process(_delta):
@@ -86,15 +80,7 @@ func _process(_delta):
 	update()
 
 func _integrate_forces(_state):
-	#if !centered:
-	#	var xform = state.get_transform()
-	#	xform.origin.x = screensize.x / 2
-	#	xform.origin.y = screensize.y / 2
-	#	state.set_transform(xform)
-	#	centered = true
-	#add_force($Thrusters/Rear.global_position, thrust_force * forward)
-	#apply_impulse(to_local($Thrusters/Rear.global_position).normalized(), thrust_force.rotated(global_rotation) * forward)
-	apply_impulse(Vector2.LEFT, thrust_force.rotated(rotation) * forward) #has a slight clockwise spin
+	apply_impulse($Thrusters/Rear.position, thrust_force.rotated(rotation) * forward) #has a slight clockwise spin
 	#apply_central_impulse(thrust_force.rotated(rotation) * forward) #works as expected, flies straight at the ship's heading
 	if break_this_time:
 		break_this_time = false
