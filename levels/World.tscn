@@ -16,10 +16,6 @@ script = ExtResource( 5 )
 [node name="Ship" parent="." instance=ExtResource( 1 )]
 position = Vector2( 512, 300 )
 
-[node name="Camera2D" type="Camera2D" parent="Ship"]
-current = true
-script = ExtResource( 3 )
-
 [node name="screensize" type="Node2D" parent="."]
 position = Vector2( 1024, 600 )
 
@@ -91,7 +87,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-TargetPath = NodePath("../Ship")
+TargetPath = NodePath("../Camera2D")
 
 [node name="container" type="PanelContainer" parent="debug"]
 margin_right = 140.0
@@ -137,3 +133,11 @@ margin_right = 126.0
 margin_bottom = 86.0
 custom_fonts/font = ExtResource( 6 )
 text = "stat5: 0.0000"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 512, 300 )
+current = true
+limit_right = 999999999
+limit_bottom = 999999999
+script = ExtResource( 3 )
+TargetPath = NodePath("../Ship")

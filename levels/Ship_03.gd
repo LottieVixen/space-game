@@ -28,7 +28,7 @@ func _draw():
 	draw_arc(Vector2.ZERO, 10, 0, angular_velocity, 32, Color.red, 10, false)
 	
 	#ship forward direction and heading
-	draw_line(Vector2.ZERO, (Vector2.ZERO + Vector2.RIGHT.rotated(rotation) * 50), Color.red)
+	draw_line(Vector2.ZERO, (Vector2.RIGHT * 50), Color.red)
 	draw_line(Vector2.ZERO, linear_velocity.rotated(rotation * -1), Color.blue)
 
 func _process(_delta):
