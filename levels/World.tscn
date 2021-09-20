@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://levels/Ship_03.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ASSETS/grid.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://scripts/Panel.gd" type="Script" id=4]
 [ext_resource path="res://scripts/World.gd" type="Script" id=5]
 [ext_resource path="res://ASSETS/fonts/roboto_font.tres" type="DynamicFont" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0.603922 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 5 )
@@ -42,15 +45,14 @@ __meta__ = {
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
 margin_right = 153.0
 margin_bottom = 82.0
+custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 146.0
-margin_bottom = 75.0
+margin_right = 153.0
+margin_bottom = 82.0
 
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
-margin_right = 139.0
+margin_right = 153.0
 margin_bottom = 14.0
 custom_fonts/font = ExtResource( 6 )
 text = "[SPACE] Main Thruster"
@@ -58,7 +60,7 @@ align = 1
 
 [node name="Label2" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
 margin_top = 18.0
-margin_right = 139.0
+margin_right = 153.0
 margin_bottom = 32.0
 custom_fonts/font = ExtResource( 6 )
 text = "[S] Backwards Thrust"
@@ -66,7 +68,7 @@ align = 1
 
 [node name="Label3" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
 margin_top = 36.0
-margin_right = 139.0
+margin_right = 153.0
 margin_bottom = 50.0
 custom_fonts/font = ExtResource( 6 )
 text = "[Q/E] Roll"
@@ -74,7 +76,7 @@ align = 1
 
 [node name="Label4" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
 margin_top = 54.0
-margin_right = 139.0
+margin_right = 153.0
 margin_bottom = 68.0
 custom_fonts/font = ExtResource( 6 )
 text = "[A/D] Strafe"
