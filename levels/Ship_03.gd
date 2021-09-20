@@ -24,14 +24,6 @@ var strafe_left = 0
 var strafe_right = 0
 
 func _draw():
-	#rear thruster
-	draw_circle((thrust_force.rotated(rotation)),5,Color.rebeccapurple)
-	draw_line($Thrusters/Rear.position.rotated(rotation),($Thrusters/Rear.position.rotated(rotation) + thrust_force.rotated(rotation)*50),Color.red)
-	#draw_line($Thrusters/Rear.position,(thrust_force.rotated($Thrusters/Rear.position.angle_to(position))*50),Color.red)
-	#reverse thrusters
-	#draw_circle(($Thrusters/Left/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
-	#get_node("../").add_point( to_global($Thrusters/Left/Forward.global_position + thrust_rev.rotated(rotation)))
-	#draw_circle(($Thrusters/Right/Forward.position + thrust_rev.rotated(rotation)*50),5,Color.rebeccapurple)
 	#angular velocity arc
 	draw_arc(Vector2.ZERO, 10, 0, angular_velocity, 32, Color.red, 10, false)
 	
@@ -88,10 +80,8 @@ func _process(_delta):
 	update()
 
 func _integrate_forces(_state):
-	#apply_impulse($Thrusters/Rear.position, thrust_force.rotated($Thrusters/Rear.position.angle_to(position)) * forward)
-	apply_impulse($Thrusters/Rear.position.rotated(rotation), thrust_force.rotated(rotation) * forward) #has a slight clockwise spin
+	apply_impulse($Thrusters/Rear.position.rotated(rotation), thrust_force.rotated(rotation) * forward)
 	#exert_force($Thrusters/Rear.position, thrust_force * forward)
-	#apply_central_impulse(thrust_force.rotated(rotation) * forward) #works as expected, flies straight at the ship's heading
 	if break_this_time:
 		break_this_time = false
 		#print("\nto:    " + String(angle_to_root/PI) + "\nfrom: " + String(angle_from_root/PI) + "\nunit:  " + String(unit_angle/PI))
